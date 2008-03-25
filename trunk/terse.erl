@@ -11,11 +11,7 @@ parse_transform(Forms) ->
    parse_transform(Forms, []).
 
 parse_transform(Forms, Options) ->
-   io:format("Options ===~n~p~n~n", [Options]),
-   io:format("Forms     =============================~n~p~n~n", [Forms]),
-   io:format("End Forms =============================~n", []),
    Fs = pmr_forms(tr_forms(Forms)),
-   io:format("AFTER   ===~n~p~n", [Fs]),
    Fs.
 
 tr_forms(Forms) ->
@@ -56,19 +52,7 @@ contains_var(Atom, Forms) ->
            (_, false) ->
              {descend, false}
        end,
-   FD = fun (Form, State) ->
-              R = F(Form, State),
-              io:format("fun ({~w, ~w, ...}, ~w) -> ~w~n", [element(1, Form),
-                                                            element(2, Form),
-                                                            State, R]),
-              R
-        end,
    M = fun (C1, C2) when C1 =:= true; C2 =:= true -> true;
            (false, false) -> false
        end,
-   MD = fun (S1, S2) ->
-              A = M(S1, S2),
-              io:format("   merge ~w and ~w -> ~w~n", [S1, S2, A]),
-              A
-        end,
    parsett:scan(FD, M, Forms, false).
