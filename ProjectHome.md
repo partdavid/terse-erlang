@@ -1,0 +1,1 @@
+Some ongoing experiments in making it possible to express some repetitious or wordy things in Erlang in a more concise manner, such as self-recursion and pattern-matched expression values.
